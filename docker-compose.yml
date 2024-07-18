@@ -1,6 +1,21 @@
-version: '3.9'
+version: '3.8'
 
 services:
+  api:
+      build: type-orm-e-docker-api:1.0
+      container_name: minha-api
+      environment:
+        MYSQL_ROOT_LOCALHOST: ${DB_HOST}
+        MYSQL_ROOT_PASSWORD: ${DB_PASS}
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USER}
+        MYSQL_PASSWORD: ${DB_USER_PASS}
+      ports:
+        - "3003:3003"
+      networks:
+        - minha-rede
+      depends_on:
+        - db
   db:
     image: mysql:5.7
     container_name: TYPE-ORM-E-DOCKER-SQL
@@ -11,6 +26,8 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_USER_PASS}
+    networks:
+      - minha-rede
     restart: 'always'
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
@@ -21,5 +38,8 @@ services:
     volumes:
       - ./tabelas.sql:/docker-entrypoint-initdb.d/tabelas.sql
 
+networks:
+  minha-rede:
+    driver: bridge
 volumes:
   db_data:

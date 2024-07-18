@@ -20,7 +20,7 @@
       "noImplicitReturns": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
-      // "baseUrl": ".",
+      "baseUrl": ".",
       "paths": {
         "@src/*": [
           "./src/*"
@@ -45,6 +45,6 @@
     ],
     "exclude": [
       "./node_modules/*",
-      "dist"
+      "build"
     ]
   }

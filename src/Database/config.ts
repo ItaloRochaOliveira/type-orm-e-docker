@@ -29,7 +29,7 @@ const config: IConfig = {
 
 const env = process.env.NODE_ENV || 'dev';
 const dbConfig = config[env as keyof typeof config];
-
+console.log(dbConfig)
 export const AppDataSource = new DataSource({
     type: "mysql",
     host: dbConfig.host,
