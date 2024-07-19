@@ -4,7 +4,7 @@
 
 O projeto "type-orm-e-docker" é um CRUD simples para fazer teste da orm typeORM em node para utilização do banco de dados de mysql em Docker.
 
-Também foi feito o uso da imagem/conteiner de MySQL no uso da API que posteriormente foi feito a imagem dessa API para o uso dela junto com o banco de dados em container.
+Também foi feito o uso da imagem/conteiner de MySQL no uso da API que posteriormente foi feito a construção da imagem dessa API para o uso posterior dela junto com o banco de dados em container.
 
 
 ### Informações Pessoais
