@@ -15,6 +15,7 @@ interface IDConfig {
 
 interface IConfig {
     dev :IDConfig;
+    homolog: IDConfig;
 }
 
 const config: IConfig = {
@@ -24,12 +25,19 @@ const config: IConfig = {
         database: process.env.DB_DATABASE!,
         host: process.env.DB_HOST!,
         dialect: 'mysql'
+    },
+    homolog: {
+        username: process.env.DB_USER!,
+        password: process.env.DB_USER_PASS!,
+        database: process.env.DB_DATABASE!,
+        host: process.env.DB_HOST!,
+        dialect: 'mysql'
     }
 }
 
-const env = process.env.NODE_ENV || 'dev';
+const env = process.env.NODE_ENV_HOMOLOG || 'dev';
 const dbConfig = config[env as keyof typeof config];
-console.log(dbConfig)
+
 export const AppDataSource = new DataSource({
     type: "mysql",
     host: dbConfig.host,
@@ -39,7 +47,7 @@ export const AppDataSource = new DataSource({
     database: dbConfig.database,
     synchronize: true,
     logging: true,
-    entities: ['src/Entity/*.ts'],
+    entities: ['src/Entity/*.ts', 'build/Entity/*.js'],
     subscribers: [],
     migrations: [],
 });

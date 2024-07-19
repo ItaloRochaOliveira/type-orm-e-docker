@@ -23,7 +23,7 @@ app.listen(Number(process.env.PORT) || 3003, () => {
     console.log(`Servidor rodando na porta ${Number(process.env.PORT) || 3003}`);
 });
 config_1.AppDataSource.initialize()
-    .then(() => {
+    .then((data) => {
     console.log("DB working!");
 })
     .catch((error) => console.log("Error: ", error));

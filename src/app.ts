@@ -27,9 +27,11 @@ app.listen(Number(process.env.PORT) || 3003, () => {
 });
 
 AppDataSource.initialize()
-    .then( () => {
+    .then( (data) => {
         // here you can start to work with your database
-        console.log("DB working!")
+        console.log("DB working!");
+
+        // console.log(data.getRepository(Users).find());
     })
     .catch((error) => console.log("Error: ", error))
 

@@ -27,7 +27,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: dbConfig.database,
     synchronize: true,
     logging: true,
-    entities: ['src/Entity/*.ts'],
+    entities: ['src/Entity/*{.ts,.js}'],
     subscribers: [],
     migrations: [],
 });
