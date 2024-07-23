@@ -1,7 +1,7 @@
-import UserController from "@src/controller/UserController";
-import { AppDataSource } from "@src/Database/config";
-import { Users } from "@src/Entity/Users";
-import IdGenarator from "@src/utils/IdGenerator";
+import UserController from "../controller/UserController";
+import { AppDataSource } from "..//Database/config";
+import { Users } from "..//Entity/Users";
+import IdGenarator from "..//utils/IdGenerator";
 import express from "express";
 
 const userRouter = express.Router();
@@ -11,12 +11,12 @@ const userController = new UserController(
     new IdGenarator()
 );
 
-userRouter.get("/users/getAll", userController.getAll);
+userRouter.get("/getAll", userController.getAll);
 
-userRouter.post("/users/create", userController.create);
+userRouter.post("/create", userController.create);
 
-userRouter.put("/users/edit/:id", userController.edit);
+userRouter.put("/edit/:id", userController.edit);
 
-userRouter.delete("/users/delete/:id", userController.delete);
+userRouter.delete("/delete/:id", userController.delete);
 
 export {userRouter};

@@ -1,9 +1,9 @@
-import { AppDataSource } from '@src/Database/config';
-import { Users } from '@src/Entity/Users';
+import { AppDataSource } from '../Database/config';
+import { Users } from '../Entity/Users';
 import { Request, Response } from 'express'
 import { Repository } from 'typeorm';
 import { createUserSchema, editUserSchema } from './schemas/createUser.DTO';
-import IdGenarator from '@src/utils/IdGenerator';
+import IdGenarator from '../utils/IdGenerator';
 
 export default class UserController {
     constructor(private userRepistory: Repository<Users>, private idGenate:IdGenarator){}
