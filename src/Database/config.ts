@@ -38,7 +38,7 @@ const config: IConfig = {
 const env = process.env.NODE_ENV_HOMOLOG || 'dev';
 const dbConfig = config[env as keyof typeof config];
 
-export const AppDataSource = new DataSource({
+export const AppDataSource: DataSource = new DataSource({
     type: "mysql",
     host: dbConfig.host,
     port: 3306,
