@@ -1,29 +1,30 @@
 
-import { Request } from "express";
-import UserController from "./UserController"
+import UserController from "../../controller/UserController"
 import IdGenaratorMock from "../mocks/utils/IdGenaratorMock"
-import { Users } from "@src/Entity/Users"
-import { EntityManager } from "typeorm"
-import UserDBMock from "@src/test/mocks/db/UserDBMock..test"
+import UserDBMock from "../mocks/db/UserDBMock"
+import { RequestMock, ResponseMock } from "../mocks/utils/ExpressMock";
 
 
 describe("Test Get All itens", () => {
     const userController = new UserController(
-        new UserDBMock(Users, {} as EntityManager),
+        new UserDBMock(),
         new IdGenaratorMock()
     )
+    
 
     test("Test the returns sucess", () => {
-        let req: Request = {
-            headers : {
-                authorization: ""
-            }
-        } as Request;
+        // const req = {
+        //     headers : {
+        //         authorization: ""
+        //     }
+        // } as unknown as Request;
 
-        const res: Response = {
-            status: 1,
-        }  as Response;
+        const req = new RequestMock({"Authorization": "aaa"})
 
-        userController.getAll(req, res)
+        const res = new ResponseMock();
+
+        userController.getAll(req, res);
+
+        expect(res.status.calledOnce).toBe(true);
     })
 })
