@@ -1,4 +1,4 @@
-import { Users } from '../../Entity/Users';
+import { Users } from '../../../Entity/Users';
 import { Repository, FindManyOptions, SaveOptions, UpdateResult, DeleteResult, FindOptionsWhere, DeepPartial, EntityManager, EntityMetadata, EntityTarget, QueryRunner  } from 'typeorm';
 
 export default class UserDBMock implements Repository<Users> {
