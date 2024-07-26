@@ -113,10 +113,12 @@ class ResponseMock implements Response{
 class RequestMock implements Request{
     headers: Record<string, string> = {};
 
-    constructor(headers?: Record<string, string>) {
+    constructor(headers?: Record<string, string>, params?: {id:string}) {
       if (headers) {
         this.headers = headers;
       }
+
+      if(params) this.params = params;
     }
 
 

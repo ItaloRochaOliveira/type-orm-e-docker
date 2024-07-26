@@ -8,11 +8,6 @@ const config: Config = {
   },
   moduleFileExtensions: ['ts', 'js'],
   testMatch: ['**/*.test.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
-  },
   rootDir: "src"
 };
 

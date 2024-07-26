@@ -4,6 +4,7 @@ import { Request, Response } from 'express'
 import { Repository } from 'typeorm';
 import { createUserSchema, editUserSchema } from './schemas/createUser.DTO';
 import IdGenarator from '../utils/IdGenerator';
+import { ZodError } from 'zod';
 
 export default class UserController {
     constructor(private userRepistory: Repository<Users>, private idGenate:IdGenarator){}
@@ -12,13 +13,9 @@ export default class UserController {
         try{
             const headers = req.headers.authorization;
     
-            console.log(headers)
-    
             if(!headers) throw new Error("Não passou o headers");
     
             const data = await this.userRepistory.find();
-    
-            console.log(data)
     
             res.status(200).send(data)
         } catch(err) {
@@ -33,14 +30,15 @@ export default class UserController {
     
             const newData = new Users(this.idGenate.generate(), createdData.name, createdData.password, new Date().toISOString(), [], createdData.email);
     
-            const data = await AppDataSource.getRepository(Users).save(newData);
+            const data = await this.userRepistory.save(newData);
     
             console.log(data)
     
             res.status(200).send(data)
         } catch(err) {
             console.log(err)
-            if(err instanceof Error) res.status(500).json(err.message)
+            if(err instanceof ZodError) res.status(400).json(err.issues[0]);
+            if(err instanceof Error) res.status(500).json(err.message);
         }
     }
 
@@ -51,20 +49,21 @@ export default class UserController {
     
             console.log(id)
     
-            const data = await AppDataSource.getRepository(Users).update(id, {name: createdData.name, password: createdData.password});
+            const data = await this.userRepistory.update(id, {name: createdData.name, password: createdData.password});
     
             console.log(data)
     
             res.status(200).send(data)
         } catch(err) {
             console.log(err)
-            if(err instanceof Error) res.status(500).json(err.message)
+            if(err instanceof ZodError) res.status(400).json(err.issues[0]);
+            if(err instanceof Error) res.status(500).json(err.message);
         }
     }
 
     delete = async (req: Request, res: Response) => {
         try{
-            const user= AppDataSource.getRepository(Users);
+            const user= this.userRepistory;
             const id = req.params.id;
     
             const userExist = await user.findBy({id});
