@@ -7,7 +7,7 @@ import {Users} from "../../Entity/Users"
 
 
 describe("Test Edit Users", () => {
-    //Testar o retorno sem id e quando não for salvo no db
+    // quando não for salvo no db
     const userController = new UserController(
         new UserDBMock(),
         new IdGenaratorMock()
@@ -43,6 +43,41 @@ describe("Test Edit Users", () => {
             new Users("2", "User Mock 21", "Pass@12", "2024-07-23", [], "user@mock2.com"),
         ])
     })
+
+    test("Testing if the id is not informed", async () => {
+      const req = new RequestMock({"authorization": "aaa"},/* {id: String()}*/);
+      let res = new ResponseMock();
+      req.body = {
+          name: "User Mock 21",
+          password: "Pass@12"
+      };
+
+      await userController.edit(req, res);
+
+      expect(res.status.calledOnce).toBe(true);
+      expect(res.status.getCall(0).args[0]).toBe(500);
+      expect(res.json.getCall(0).args[0]).toStrictEqual("Cannot read properties of undefined (reading 'id')");
+    });
+
+    test("Testing if date is not save in db", async() => {
+      const req = new RequestMock({"authorization": "aaa"}, {id: "3"});
+      let res = new ResponseMock();
+
+      req.body = {
+          name: "User Mock 21",
+          password: "Pass@12"
+      };
+
+      await userController.edit(req, res);
+
+      expect(res.status.calledOnce).toBe(true);
+      expect(res.status.getCall(0).args[0]).toBe(200);
+      expect(res.send.getCall(0).args[0]).toStrictEqual({
+          "generatedMaps": [],
+          "raw": [],
+          "affected": 0
+      });
+    });
 
     test("Testing if the body is not informed", async () => {
         const req = new RequestMock({"authorization": "aaa"}, {id: "2"});
