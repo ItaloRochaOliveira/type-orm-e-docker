@@ -1,4 +1,3 @@
-import { AppDataSource } from '../Database/config';
 import { Users } from '../Entity/Users';
 import { Request, Response } from 'express'
 import { Repository } from 'typeorm';
@@ -55,7 +54,7 @@ export default class UserController {
     
             res.status(200).send(data)
         } catch(err) {
-            console.log(err)
+            // console.log(err)
             if(err instanceof ZodError) res.status(400).json(err.issues[0]);
             if(err instanceof Error) res.status(500).json(err.message);
         }
@@ -67,14 +66,15 @@ export default class UserController {
             const id = req.params.id;
     
             const userExist = await user.findBy({id});
-    
+
             if(!userExist.length) throw new Error("Usuário já foi excluido ou não existe");
     
             const data = await user.delete(id);
     
-            res.status(200).send(data)
+            res.status(200).send(data);
         } catch(err) {
-            console.log(err)
+            // console.log(err)
+            if(err instanceof ZodError) res.status(400).json(err.issues[0]);
             if(err instanceof Error) res.status(500).json(err.message)
         }
     }

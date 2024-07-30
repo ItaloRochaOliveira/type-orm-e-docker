@@ -31,7 +31,6 @@ export default class UserDBMock implements Repository<Users> {
     average: sinon.SinonStub;
     minimum: sinon.SinonStub;
     maximum: sinon.SinonStub;
-    findBy: sinon.SinonStub;
     findAndCount: sinon.SinonStub;
     findByIds: sinon.SinonStub;
     findOne: sinon.SinonStub;
@@ -93,4 +92,17 @@ export default class UserDBMock implements Repository<Users> {
             affected
         } as DeleteResult;
     }
+
+    async findBy<T extends {id: string}>(where: T ): Promise<Users[]>{
+        where = where as T;
+    
+        const userSearched = []; 
+
+        if(this.users.find(user => user.id === where.id) != undefined){
+            userSearched.push(this.users.find(user => user.id === where.id));
+        }
+
+        return userSearched as Users[];
+    };
+
 }
